@@ -1,0 +1,224 @@
+<!--Double navigation-->
+<header *ngIf="path!='auth'">
+
+  <!-- Sidebar navigation -->
+  <mdb-side-nav #sidenav class="lime accent-4 fixed" [fixed]="true">
+
+    <links *ngIf="path=='home'">
+      <app-shopping-cart></app-shopping-cart>
+    </links>
+
+    <links *ngIf="path=='admin'">
+      <h5 class="text-center text-dark" style="margin-top: 30px;">
+        <strong>איזור אדמין</strong>
+        &nbsp;
+        <i class="fas fa-user-shield"></i>
+      </h5>
+      <hr class="z-depth-2">
+      <ul class="text-right ">
+        <li><a [routerLink]="['/admin']" mdbWavesEffect class="sidenav-links" style="width: 100%;">לוח בקרה <i
+              class="fas fa-tools"></i></a></li>
+        <li><a [routerLink]="['/admin/users']" mdbWavesEffect class="sidenav-links" style="width: 100%;">משתמשים <i
+              class="fas fa-users"></i></a></li>
+        <li><a [routerLink]="['/moderator']" mdbWavesEffect class="sidenav-links" style="width: 100%;">איזור עורך תוכן
+            <i class="fas fa-user-tie"></i></a></li>
+      </ul>
+    </links>
+
+    <links *ngIf="path=='moderator'">
+      <h5 class="text-center text-dark" style="margin-top: 30px;">
+        <strong>איזור עורך תוכן</strong>
+        &nbsp;
+        <i class="fas fa-user-tie"></i>
+      </h5>
+      <hr class="z-depth-2">
+      <ul class="text-right ">
+        <li><a [routerLink]="['/moderator']" mdbWavesEffect class="sidenav-links" style="width: 100%;">לוח בקרה <i
+              class="fas fa-tools"></i></a></li>
+        <li><a [routerLink]="['/moderator/products']" mdbWavesEffect class="sidenav-links" style="width: 100%;">מוצרים
+            <i class="fas fa-hamburger"></i></a></li>
+        <li><a [routerLink]="['/moderator/orders']" mdbWavesEffect class="sidenav-links" style="width: 100%;">הזמנות <i
+              class="fas fa-file-invoice-dollar"></i></a></li>
+        <li><a [routerLink]="['/moderator/categories']" mdbWavesEffect class="sidenav-links"
+            style="width: 100%;">קטגוריות <i class="fas fa-align-left"></i></a></li>
+        <li><a [routerLink]="['/moderator/subcategories']" mdbWavesEffect class="sidenav-links"
+            style="width: 100%;">תת-קטגוריות <i class="fas fa-bars"></i></a></li>
+        <li><a *ngIf="fullUser && fullUser.roleType=='admin'" [routerLink]="['/admin/']" mdbWavesEffect
+            class="sidenav-links" style="width: 100%;">איזור
+            אדמין <i class="fas fa-user-shield"></i></a></li>
+      </ul>
+    </links>
+  </mdb-side-nav>
+  <!--/. Sidebar navigation -->
+
+  <!-- Navbar -->
+  <mdb-navbar
+    SideClass="navbar fixed-top navbar-toggleable-md navbar-expand-lg scrolling-navbar double-nav lime accent-3"
+    [containerInside]="false">
+
+    <navlinks class="navbar-container">
+      <!-- SideNav slide-out button -->
+      <div class="float-left">
+        <a (click)="sidenav.show()" class="button-collapse" *ngIf="path=='home'">
+          <mdb-icon fas icon="shopping-cart"></mdb-icon>
+        </a>
+        <a (click)="sidenav.show()" class="button-collapse" *ngIf="path!='home'">
+          <mdb-icon fas icon="bars"></mdb-icon>
+        </a>
+
+      </div>
+      <!--/. SideNav slide-out button -->
+    </navlinks>
+
+    <mdb-navbar-brand>
+      <a style="padding-left: 15px;" class="navbar-brand black-text" [routerLink]="['']">
+        <h5>סופרמרקט <img src="./assets/images/fruits.svg" height="45px" width="45px"></h5>
+
+      </a>
+
+    </mdb-navbar-brand>
+
+    <navlinks>
+      <ul class="nav navbar-nav nav-flex-icons ml-auto ie-double-nav"
+        *ngIf="afAuth.user | async as user; else loggedOut">
+        <li class="nav-item avatar dropdown" dropdown>
+
+          <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+            <img *ngIf="user.photoURL" src="{{user.photoURL}}" (error)="updateImageUrl(user.uid)" alt=""
+              class="img-fluid rounded-circle" style="height: 45px; width: 45px; ">
+            <img *ngIf="!user.photoURL"
+              src="https://d1bvpoagx8hqbg.cloudfront.net/259/4ea4217efbbf179e02269b065d23a60e.jpg" alt=""
+              class="img-fluid rounded-circle" style="height: 45px; width: 45px; "></a>
+          <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
+            <p class="text-right">{{user.displayName}} ,שלום</p>
+
+            <a class="dropdown-item waves-light text-right" mdbWavesEffect [routerLink]="['/auth/profile']">
+              המשתמש שלי&nbsp;
+              <i class="fas fa-user-circle"></i></a>
+            <div *ngIf="fullUser">
+              <a class="dropdown-item waves-light text-right" mdbWavesEffect [routerLink]="['/moderator']"
+                *ngIf="fullUser.roleType=='moderator' || fullUser.roleType=='admin'">
+                איזור עורך תוכן&nbsp;
+                <i class="fas fa-user-tie"></i></a>
+              <a class="dropdown-item waves-light text-right" mdbWavesEffect [routerLink]="['/admin']"
+                *ngIf="fullUser.roleType=='admin'">
+                איזור אדמין&nbsp;
+                <i class="fas fa-user-shield"></i></a>
+            </div>
+
+            <a class="dropdown-item waves-light text-right" mdbWavesEffect (click)="logout()">
+              התנתק&nbsp;
+              <mdb-icon fas icon="sign-out-alt"></mdb-icon>
+            </a>
+          </div>
+        </li>
+      </ul>
+      <ng-template #loggedOut>
+        <ul class="nav navbar-nav nav-flex-icons ml-auto ie-double-nav">
+          <li class="nav-item avatar dropdown" dropdown>
+            <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+              <img src="https://d1bvpoagx8hqbg.cloudfront.net/259/4ea4217efbbf179e02269b065d23a60e.jpg" alt=""
+                class="img-fluid rounded-circle" style="height: 45px; width: 45px;"></a>
+            <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
+              <p class="text-right">שלום, משתמש</p>
+
+              <a class="dropdown-item waves-light text-right" mdbWavesEffect [routerLink]="['/auth/login']">
+                התחבר&nbsp;
+                <mdb-icon fas icon="sign-in-alt"></mdb-icon>
+              </a>
+              <a class="dropdown-item waves-light text-right" mdbWavesEffect [routerLink]="['/auth/register']">
+                הירשם&nbsp;
+                <mdb-icon fas icon="plus-circle"></mdb-icon>
+              </a>
+            </div>
+          </li>
+        </ul>
+      </ng-template>
+    </navlinks>
+
+  </mdb-navbar>
+  <!--/. Navbar -->
+
+
+  <!--Navbar-->
+
+  <!--/.Navbar-->
+</header>
+
+
+
+<header *ngIf="path=='auth'">
+  <!-- Navbar -->
+  <mdb-navbar
+    SideClass="navbar fixed-top navbar-toggleable-md navbar-expand-lg scrolling-navbar double-nav lime accent-3"
+    [containerInside]="false">
+
+
+    <mdb-navbar-brand>
+      <a style="padding-left: 15px;" class="navbar-brand black-text" [routerLink]="['']">
+        <h5>סופרמרקט <img src="./assets/images/fruits.svg" height="45px" width="45px"></h5>
+      </a>
+
+    </mdb-navbar-brand>
+
+    <navlinks>
+      <ul class="nav navbar-nav nav-flex-icons ml-auto ie-double-nav"
+        *ngIf="afAuth.user | async as user; else loggedOut">
+        <li class="nav-item avatar dropdown" dropdown>
+
+          <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+            <img *ngIf="user.photoURL" src="{{user.photoURL}}" (error)="updateImageUrl(user.uid)" alt=""
+              class="img-fluid rounded-circle" style="height: 45px; width: 45px; ">
+            <img *ngIf="!user.photoURL"
+              src="https://d1bvpoagx8hqbg.cloudfront.net/259/4ea4217efbbf179e02269b065d23a60e.jpg" alt=""
+              class="img-fluid rounded-circle" style="height: 45px; width: 45px; "></a>
+          <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
+            <p class="text-right">{{user.displayName}} ,שלום</p>
+
+            <a class="dropdown-item waves-light text-right" mdbWavesEffect [routerLink]="['/auth/profile']">
+              המשתמש שלי&nbsp;
+              <i class="fas fa-user-circle"></i></a>
+            <div *ngIf="fullUser">
+              <a class="dropdown-item waves-light text-right" mdbWavesEffect [routerLink]="['/moderator']"
+                *ngIf="fullUser.roleType=='moderator' || fullUser.roleType=='admin'">
+                איזור עורך תוכן&nbsp;
+                <i class="fas fa-user-tie"></i></a>
+              <a class="dropdown-item waves-light text-right" mdbWavesEffect [routerLink]="['/admin']"
+                *ngIf="fullUser.roleType=='admin'">
+                איזור אדמין&nbsp;
+                <i class="fas fa-user-shield"></i></a>
+            </div>
+
+            <a class="dropdown-item waves-light text-right" mdbWavesEffect (click)="logout()">
+              התנתק&nbsp;
+              <mdb-icon fas icon="sign-out-alt"></mdb-icon>
+            </a>
+          </div>
+        </li>
+      </ul>
+      <ng-template #loggedOut>
+        <ul class="nav navbar-nav nav-flex-icons ml-auto ie-double-nav">
+          <li class="nav-item avatar dropdown" dropdown>
+            <a dropdownToggle mdbWavesEffect type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
+              <img src="https://d1bvpoagx8hqbg.cloudfront.net/259/4ea4217efbbf179e02269b065d23a60e.jpg" alt=""
+                class="img-fluid rounded-circle" style="height: 45px; width: 45px;"></a>
+            <div *dropdownMenu class="dropdown-menu dropdown-menu-right dropdown dropdown-primary" role="menu">
+              <p class="text-right">שלום, משתמש</p>
+
+              <a class="dropdown-item waves-light text-right" mdbWavesEffect [routerLink]="['/auth/login']">
+                התחבר&nbsp;
+                <mdb-icon fas icon="sign-in-alt"></mdb-icon>
+              </a>
+              <a class="dropdown-item waves-light text-right" mdbWavesEffect [routerLink]="['/auth/register']">
+                הירשם&nbsp;
+                <mdb-icon fas icon="plus-circle"></mdb-icon>
+              </a>
+            </div>
+          </li>
+        </ul>
+      </ng-template>
+    </navlinks>
+
+  </mdb-navbar>
+</header>
+<!--/.Double navigation-->

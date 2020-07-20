@@ -1,0 +1,15 @@
+C:\Users\Eden\source\repos\Store\Store\bin\Release\netcoreapp2.1\Store.deps.json
+C:\Users\Eden\source\repos\Store\Store\bin\Release\netcoreapp2.1\Store.runtimeconfig.json
+C:\Users\Eden\source\repos\Store\Store\bin\Release\netcoreapp2.1\Store.runtimeconfig.dev.json
+C:\Users\Eden\source\repos\Store\Store\bin\Release\netcoreapp2.1\Store.dll
+C:\Users\Eden\source\repos\Store\Store\bin\Release\netcoreapp2.1\Store.pdb
+C:\Users\Eden\source\repos\Store\Store\obj\Release\netcoreapp2.1\Store.csprojAssemblyReference.cache
+C:\Users\Eden\source\repos\Store\Store\obj\Release\netcoreapp2.1\Store.csproj.CoreCompileInputs.cache
+C:\Users\Eden\source\repos\Store\Store\obj\Release\netcoreapp2.1\Store.RazorAssemblyInfo.cache
+C:\Users\Eden\source\repos\Store\Store\obj\Release\netcoreapp2.1\Store.RazorAssemblyInfo.cs
+C:\Users\Eden\source\repos\Store\Store\obj\Release\netcoreapp2.1\UserSecretsAssemblyInfo.cs
+C:\Users\Eden\source\repos\Store\Store\obj\Release\netcoreapp2.1\Store.AssemblyInfoInputs.cache
+C:\Users\Eden\source\repos\Store\Store\obj\Release\netcoreapp2.1\Store.AssemblyInfo.cs
+C:\Users\Eden\source\repos\Store\Store\obj\Release\netcoreapp2.1\Store.RazorTargetAssemblyInfo.cache
+C:\Users\Eden\source\repos\Store\Store\obj\Release\netcoreapp2.1\Store.dll
+C:\Users\Eden\source\repos\Store\Store\obj\Release\netcoreapp2.1\Store.pdb

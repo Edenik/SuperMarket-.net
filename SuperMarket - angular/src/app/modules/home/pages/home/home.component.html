@@ -1,0 +1,32 @@
+<div *ngIf="loading" class="text-center" style="margin-top: 100px;">
+    <mdb-spinner spinnerType="big"></mdb-spinner>
+</div>
+
+
+<div *ngIf="!serverError && !loading">
+    <h2 class="text-center" style="margin-top: 30px;">:מוצרים במבצע</h2>
+
+
+    <div fxLayout="row wrap" fxLayoutAlign="space-evenly center">
+        <app-product [product]="product" *ngFor="let product of inSaleProducts"></app-product>
+    </div>
+
+
+    <h2 class="text-center" style="margin-top: 30px;">:מוצרים עם סימון תזונתי</h2>
+
+
+    <div fxLayout="row wrap" fxLayoutAlign="space-evenly center">
+        <app-product [product]="product" *ngFor="let product of hasNutritialMark"></app-product>
+    </div>
+
+
+    <h2 class="text-center" style="margin-top: 30px;">:מוצרים</h2>
+
+
+    <div fxLayout="row wrap" fxLayoutAlign="space-evenly center">
+        <app-product [product]="product" *ngFor="let product of products"></app-product>
+    </div>
+</div>
+
+
+<h2 *ngIf="serverError" class="text-center" style="margin-top: 50px; font-weight: 700;">אין גישה לשרת</h2>
